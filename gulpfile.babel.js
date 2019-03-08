@@ -1,8 +1,10 @@
 import babelify from 'babelify';
 import browserify from 'browserify';
 import buffer from 'vinyl-buffer';
+import cssnano from 'gulp-cssnano';
 import gulp from 'gulp';
 import livereload from 'gulp-livereload';
+import minify from 'gulp-minify';
 import sass from 'gulp-sass';
 import source from 'vinyl-source-stream';
 import sourcemaps from 'gulp-sourcemaps';
@@ -34,6 +36,14 @@ gulp.task('script', () => {
   .pipe(livereload());
 });
 
+gulp.task('script:minifier', () => {
+  return gulp.src(`${distDir}/scripts/bundle.js`)
+    .pipe(minify())
+    .pipe(gulp.dest(`${distDir}/scripts`))
+});
+
+gulp.task('script:minify', gulp.series('script', 'script:minifier'));
+
 // CSS
 gulp.task('style', () => {
   return gulp.src(`${srcDir}/scss/**/*.scss`)
@@ -42,6 +52,13 @@ gulp.task('style', () => {
   .pipe(sourcemaps.write())
   .pipe(gulp.dest(`${distDir}/css`))
   .pipe(livereload());
+});
+
+gulp.task('style:minify', function() {
+  return gulp.src(`${srcDir}/scss/**/*.scss`)
+      .pipe(sass().on('error', sass.logError))
+      .pipe(cssnano())
+      .pipe(gulp.dest(`${distDir}/css`));
 });
 
 // HTML
@@ -61,3 +78,4 @@ gulp.task('watch', () => {
 
 // Default
 gulp.task('default', gulp.series(gulp.parallel('style', 'script'), 'watch'));
+gulp.task('compile', gulp.parallel('style:minify', 'script:minify'));
