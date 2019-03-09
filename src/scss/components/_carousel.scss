@@ -9,17 +9,43 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    overflow: scroll;
+    overflow: hidden;
+    margin-bottom: 2rem;
     &:after {
       content: '';
       width: 0;
     }
   }
   &__slide {
-    width: 100%;
+    position: relative;
     flex-shrink: 0;
+    counter-increment: slide-number;
+    &:before {
+      content: counter(slide-number);
+      display: block;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      color: #fff;
+      font-size: 2rem;
+    }
     img {
       width: 100%;
+    }
+    @include media('<=small') {
+      width: 100%;
+    }
+    @include media('>480px') {
+      // Avoid those fencepost errors with calc
+      width: calc((100% / 3) - (2rem / 3 * 2) );
+      margin-right: 2rem;
+    }
+    @include media('>small') {
+      width: calc(20% - (2rem / 5 * 4));
+      max-width: 36rem;
+      img {
+        
+      }
     }
   }
   &__caption {

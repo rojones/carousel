@@ -1,62 +1,98 @@
 .controls {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  &__arrow {
-    pointer-events: initial;
+  @include media('<tiny') {
     position: absolute;
-    padding: 0;
-    border: 0;
-    top: 50%;
-    width: 2rem;
-    height: 4rem;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.25);
-    // hide text
-    text-indent: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    // focus effect
-    border: solid 0.2rem transparent;
-    outline: none;
-    transition: border-color 0.15s ease-in-out;
-    svg {
-      display: block;
-      height: 2rem;
-      width: 2rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+  @include media('>=tiny') {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+  &__trigger {
+    @include media('<=tiny') {
+      pointer-events: initial;
       position: absolute;
+      padding: 0;
+      border: 0;
       top: 50%;
-      fill: $text;
-    }
-    &:focus {
-      border-top-color: white;
-      border-bottom-color: white;
-    }
-    &--prev {
-      left: 0;
-      border-top-right-radius: 2.2rem;
-      border-bottom-right-radius: 2.2rem;
+      width: 2rem;
+      height: 4rem;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.25);
+      // Hide text for mobile
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      // Focus effect
+      border: solid 0.2rem transparent;
+      outline: none;
+      transition: border-color 0.15s ease-in-out;
       svg {
-        left: 50%;
-        transform: translate(-50%, -50%) scaleX(-1);
+        display: block;
+        height: 2rem;
+        width: 1rem;
+        position: absolute;
+        top: 50%;
+        fill: $text;
       }
       &:focus {
-        border-right-color: white;
+        border-top-color: white;
+        border-bottom-color: white;
+      }
+      &--prev {
+        left: 0;
+        border-top-right-radius: 2.2rem;
+        border-bottom-right-radius: 2.2rem;
+        svg {
+          left: 50%;
+          transform: translate(-50%, -50%) scaleX(-1);
+        }
+        &:focus {
+          border-right-color: white;
+        }
+      }
+      &--next {
+        right: 0;
+        border-top-left-radius: 2.2rem;
+        border-bottom-left-radius: 2.2rem;
+        svg {
+          right: 50%;
+          transform: translate(50%, -50%);
+        }
+        &:focus {
+          border-left-color: white;
+        }
       }
     }
-    &--next {
-      right: 0;
-      border-top-left-radius: 2.2rem;
-      border-bottom-left-radius: 2.2rem;
-      svg {
-        right: 50%;
-        transform: translate(50%, -50%);
+    @include media('>tiny') {
+      background: $text;
+      border: 0;
+      color: #fff;
+      font-size: 1.6rem;
+      padding: 0.4rem 1rem;
+      margin-bottom: 1.6rem;
+      cursor: pointer;
+      transition: background 0.15s ease-in-out;
+      &:hover {
+        background: $text-light;
       }
-      &:focus {
-        border-left-color: white;
+      &--prev {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+      }
+      &--next {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+      }
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+      svg {
+        display: none;
       }
     }
   }

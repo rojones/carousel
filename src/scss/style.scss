@@ -6,9 +6,10 @@
 @import 'components/carousel';
 @import 'components/controls';
 
-body {
+html {
     background: $background;
     color: $text;
+    font-size: 10px;
 }
 
 header {
