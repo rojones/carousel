@@ -1,3 +1,16 @@
+@import '../../node_modules/reset-css/sass/reset';
+@import '../../node_modules/include-media/dist/include-media';
+@import 'variables';
+@import 'color-palette';
+@import 'typography';
+@import 'components/carousel';
+@import 'components/controls';
+
 body {
-    background: tan;
+    background: $background;
+    color: $text;
+}
+
+header {
+    padding: 2rem;
 }

@@ -1,17 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Carousel</title>
-    <link rel="stylesheet" href="dist/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Carousel</title>
+  <link rel="stylesheet" href="dist/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
 </head>
 <body>
-
-    <div class="carousel">
-        Loading&hellip;
+  <header>
+    <h1>Carousel Test</h1>
+  </header>
+  <div class="carousel" aria-live="polite">
+    <ul class="carousel__slide-container">
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image1">
+          <figcaption class="carousel__caption">Placeholder image 1</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image2">
+          <figcaption class="carousel__caption">Placeholder image 2</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image3">
+          <figcaption class="carousel__caption">Placeholder image 3</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image4">
+          <figcaption class="carousel__caption">Placeholder image 4</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image5">
+          <figcaption class="carousel__caption">Placeholder image 5</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image6">
+          <figcaption class="carousel__caption">Placeholder image 6</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image7">
+          <figcaption class="carousel__caption">Placeholder image 7</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image8">
+          <figcaption class="carousel__caption">Placeholder image 8</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image9">
+          <figcaption class="carousel__caption">Placeholder image 9</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image10">
+          <figcaption class="carousel__caption">Placeholder image 0</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image11">
+          <figcaption class="carousel__caption">Placeholder image 1</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image12">
+          <figcaption class="carousel__caption">Placeholder image 2</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image13">
+          <figcaption class="carousel__caption">Placeholder image 3</figcaption>
+        </figure>
+      </li>
+      <li class="carousel__slide">
+        <figure>
+          <img src="http://placehold.it/640x400" alt="Placeholder image14">
+          <figcaption class="carousel__caption">Placeholder image 4</figcaption>
+        </figure>
+      </li>
+    </ul>
+    <div class="controls">
+      <button class="controls__arrow controls__arrow--prev">
+        Prev
+        <svg>
+          <title>Previous arrow</title>
+          <use xlink:href="dist/svg/arrow.svg#Layer_1"></use>
+        </svg>
+      </button>
+      <button class="controls__arrow controls__arrow--next">
+        Next
+        <svg>
+          <title>Next arrow</title>
+          <use xlink:href="dist/svg/arrow.svg#Layer_1"></use>
+        </svg>
+      </button>
     </div>
-    <script src="dist/scripts/bundle.js"></script>
+  </div>
+  <script src="dist/scripts/bundle.js"></script>
 </body>
 </html>

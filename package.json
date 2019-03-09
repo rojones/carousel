@@ -31,6 +31,8 @@
     "gulp-minify": "^3.1.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
+    "include-media": "^1.4.9",
+    "reset-css": "^4.0.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },

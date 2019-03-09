@@ -1,0 +1,63 @@
+.controls {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  &__arrow {
+    pointer-events: initial;
+    position: absolute;
+    padding: 0;
+    border: 0;
+    top: 50%;
+    width: 2rem;
+    height: 4rem;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.25);
+    // hide text
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    // focus effect
+    border: solid 0.2rem transparent;
+    outline: none;
+    transition: border-color 0.15s ease-in-out;
+    svg {
+      display: block;
+      height: 2rem;
+      width: 2rem;
+      position: absolute;
+      top: 50%;
+      fill: $text;
+    }
+    &:focus {
+      border-top-color: white;
+      border-bottom-color: white;
+    }
+    &--prev {
+      left: 0;
+      border-top-right-radius: 2.2rem;
+      border-bottom-right-radius: 2.2rem;
+      svg {
+        left: 50%;
+        transform: translate(-50%, -50%) scaleX(-1);
+      }
+      &:focus {
+        border-right-color: white;
+      }
+    }
+    &--next {
+      right: 0;
+      border-top-left-radius: 2.2rem;
+      border-bottom-left-radius: 2.2rem;
+      svg {
+        right: 50%;
+        transform: translate(50%, -50%);
+      }
+      &:focus {
+        border-left-color: white;
+      }
+    }
+  }
+}
