@@ -1,16 +1,29 @@
 .carousel {
-  background: #fff;
   overflow: hidden;
-  width: calc(100vw - 4rem);
   margin-left: auto;
   margin-right: auto;
   position: relative;
-  &__slide-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+  // The track the slides will move inside of
+  &__track {
+    background: #fff;
     overflow: hidden;
     margin-bottom: 2rem;
+    @include media('<=tiny') {
+      width: calc(100vw - 4rem);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @include media('>tiny') {
+      padding: 2rem;
+    }
+  }
+  // Collection of slides we'll be moving around
+  &__slide-container {
+    @include media('>tiny') {
+      width: calc(100vw - 4rem);
+    }
+    display: flex;
+    flex-direction: row;
     &:after {
       content: '';
       width: 0;
@@ -19,24 +32,24 @@
   &__slide {
     position: relative;
     flex-shrink: 0;
-    counter-increment: slide-number;
-    &:before {
-      content: counter(slide-number);
-      display: block;
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      color: #fff;
-      font-size: 2rem;
-    }
     img {
       width: 100%;
     }
-    @include media('<=small') {
+    @include media('<=tiny') {
       width: 100%;
+      counter-increment: slide-number;
+      &:before {
+        content: counter(slide-number);
+        display: block;
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        color: #fff;
+        font-size: 2rem;
+      }
     }
-    @include media('>480px') {
-      // Avoid those fencepost errors with calc
+    @include media('>tiny') {
+      // Avoid those fencepost errors with maths
       width: calc((100% / 3) - (2rem / 3 * 2) );
       margin-right: 2rem;
     }
