@@ -37,6 +37,11 @@
     }
     @include media('<=tiny') {
       width: 100%;
+    }
+    @include media('>tiny') {
+      // Avoid those fencepost errors with maths
+      width: calc((100% / 3) - (2rem / 3 * 2) );
+      margin-right: 2rem;
       counter-increment: slide-number;
       &:before {
         content: counter(slide-number);
@@ -47,11 +52,6 @@
         color: #fff;
         font-size: 2rem;
       }
-    }
-    @include media('>tiny') {
-      // Avoid those fencepost errors with maths
-      width: calc((100% / 3) - (2rem / 3 * 2) );
-      margin-right: 2rem;
     }
     @include media('>small') {
       width: calc(20% - (2rem / 5 * 4));
