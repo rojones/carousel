@@ -5,7 +5,7 @@
   position: relative;
   // The track the slides will move inside of
   &__track {
-    background: #fff;
+    background: $light;
     overflow: hidden;
     margin-bottom: 2rem;
     @include media('<=tiny') {
@@ -52,7 +52,7 @@
       width: 100%;
     }
     @include media('>tiny') {
-      // Avoid those fencepost errors with maths
+      // Calcuate relative widths with fixed margins
       width: calc((100% / 3) - (2rem / 3 * 2) );
       margin-right: 2rem;
       counter-increment: slide-number;
@@ -62,7 +62,7 @@
         position: absolute;
         top: 1rem;
         left: 1rem;
-        color: #fff;
+        color: $light;
         font-size: 2rem;
       }
     }
@@ -77,5 +77,8 @@
   &__caption {
     font-size: 2rem;
     margin-top: 1rem;
+    @include media('<=tiny') {
+      padding: 1rem;
+    }
   }
 }

@@ -24,12 +24,13 @@ export default class Carousel {
     return xhr;
   }
 
+  // Fetch images and then call the buildCarousel function
   fetchImages() {
     this.getCORS(this.apiUrl, (request) => {
-      // get response from api
+      // Parse response from api as an object
       const response = JSON.parse(request.currentTarget.response || request.target.responseText);
 
-      // snip out relevant part of response for processing
+      // Snip out relevant part of response for processing
       let hits = [];
       for (let i = 0; i < this.options.count; i++) {
         hits.push(response.hits[i])
@@ -38,7 +39,7 @@ export default class Carousel {
     });
   }
 
-  // Convert api hits to html
+  // Convert api hits to html and inject
   buildCarousel(hits) {
     let slides = ``;
     for (let i = 0; i < hits.length; i++) {
@@ -54,7 +55,7 @@ export default class Carousel {
     
     this.firstSlide = this.el.querySelector('.carousel__slide');
     this.slides = this.el.querySelectorAll('.carousel__slide');
-    this.onResize();
+    this.recalculate();
   }
 
   // Handle navigation
@@ -62,12 +63,17 @@ export default class Carousel {
     // Ensure we haven't scrolled too far due to resizing or similar
     if (slideId <= this.visibleSlides) {
       this.activeSlide = this.visibleSlides;
+      this.triggerPrev.disabled = true;
+      this.triggerNext.disabled = false;
     } else if (slideId >= this.slides.length - (this.visibleSlides + 1)) {
       this.activeSlide = this.slides.length - (this.visibleSlides + 1);
+      this.triggerPrev.disabled = false;
+      this.triggerNext.disabled = true;
     } else {
       this.activeSlide = slideId;
+      this.triggerPrev.disabled = false;
+      this.triggerNext.disabled = false;
     }
-
 
     // Set aria-hidden values dependant on number of visible slides
     this.slides.forEach((item, i) => {
@@ -78,16 +84,15 @@ export default class Carousel {
       }
     });
 
-    // Animate slides by setting the offset of the slide container
+    // Animate slides by setting the offset of the slide container based on the width of a single slide and its margin
     const slideWidth = parseInt(this.firstSlide.offsetWidth);
     const slideMargin = parseInt(getComputedStyle(this.firstSlide).marginRight);
     const totalSlideWidth = slideWidth + slideMargin;
     this.container.style.transform = `translateX(-${totalSlideWidth * this.activeSlide}px)`
   }
 
-  // Handle recalculation of carousel position etc
-  onResize () {
-
+  // Handle repositioning carousel elements due to resizing or other changes
+  recalculate() {
     // This could be upgraded later to handle more varied cases
     if (window.innerWidth <= 480) {
       this.visibleSlides = 0;
@@ -96,8 +101,6 @@ export default class Carousel {
     } else {
       this.visibleSlides = 2;
     }
-
-    // The offset and aria-hidden state need to be recalculated based on the size and number of the images
     this.changeActiveSlide(this.activeSlide);
   }
 
@@ -116,7 +119,7 @@ export default class Carousel {
       this.onTriggerNext();
     });
     window.addEventListener('resize', () => {
-      this.onResize();
+      this.recalculate();
     });
   }
 }

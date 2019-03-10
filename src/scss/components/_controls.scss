@@ -13,6 +13,7 @@
     flex-direction: row;
   }
   &__trigger {
+    // Arrows for single item navigation
     @include media('<=tiny') {
       pointer-events: initial;
       position: absolute;
@@ -39,9 +40,12 @@
         top: 50%;
         fill: $text;
       }
-      &:focus {
-        border-top-color: white;
-        border-bottom-color: white;
+      &:hover, &:focus, &:active {
+        border-top-color: $light;
+        border-bottom-color: $light;
+      }
+      &:disabled {
+        display: none;
       }
       &--prev {
         left: 2rem;
@@ -51,8 +55,8 @@
           left: 50%;
           transform: translate(-50%, -50%) scaleX(-1);
         }
-        &:focus {
-          border-right-color: white;
+        &:hover, &:focus, &:active {
+          border-right-color: $light;
         }
       }
       &--next {
@@ -63,21 +67,22 @@
           right: 50%;
           transform: translate(50%, -50%);
         }
-        &:focus {
-          border-left-color: white;
+        &:hover, &:focus, &:active {
+          border-left-color: $light;
         }
       }
     }
+    // "Prev" and "Next" buttons for full carousel navigation
     @include media('>tiny') {
       background: $text;
       border: 0;
-      color: #fff;
+      color: $light;
       font-size: 1.6rem;
       padding: 0.4rem 1rem;
       margin-bottom: 1.6rem;
       cursor: pointer;
       transition: background 0.15s ease-in-out;
-      &:hover {
+      &:hover, &:focus, &:active {
         background: $text-light;
       }
       &--prev {
@@ -90,6 +95,10 @@
       }
       &:not(:last-child) {
         margin-right: 0.5rem;
+      }
+      &:disabled {
+        background: $inactive;
+        cursor: not-allowed;
       }
       svg {
         display: none;
