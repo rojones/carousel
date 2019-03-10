@@ -5,17 +5,17 @@ export default class Carousel {
     this.apiUrl = `https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=${this.options.searchQuery}&image_type=photo`;
     this.count = this.options.slides;
     this.activeSlide = 0;
+    this.visibleSlides = 2;
     this.container = el.querySelector('.carousel__slide-container');
-    this.triggerPrev = el.querySelector('.controls__trigger--prev')
-    this.triggerNext = el.querySelector('.controls__trigger--next')
-    
+    this.triggerPrev = el.querySelector('.controls__trigger--prev');
+    this.triggerNext = el.querySelector('.controls__trigger--next');
 
     this.addListeners();
     this.fetchImages();
   }
 
 
-  // move this to helpers later
+  // Basic function to retrieve images fro pixabay api
   getCORS(url, success) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -38,7 +38,7 @@ export default class Carousel {
     });
   }
 
-  // convert api hits to html
+  // Convert api hits to html
   buildCarousel(hits) {
     let slides = ``;
     for (let i = 0; i < hits.length; i++) {
@@ -54,40 +54,58 @@ export default class Carousel {
     
     this.firstSlide = this.el.querySelector('.carousel__slide');
     this.slides = this.el.querySelectorAll('.carousel__slide');
-    console.log(this.slides)
-    this.changeActiveSlide(2)
+    this.onResize();
   }
 
-  // handle navigation
+  // Handle navigation
   changeActiveSlide(slideId) {
-    this.activeSlide = slideId;
+    // Ensure we haven't scrolled too far due to resizing or similar
+    if (slideId <= this.visibleSlides) {
+      this.activeSlide = this.visibleSlides;
+    } else if (slideId >= this.slides.length - (this.visibleSlides + 1)) {
+      this.activeSlide = this.slides.length - (this.visibleSlides + 1);
+    } else {
+      this.activeSlide = slideId;
+    }
 
-    this.slides.forEach((item) => {
-      item.setAttribute('aria-hidden', true);
+
+    // Set aria-hidden values dependant on number of visible slides
+    this.slides.forEach((item, i) => {
+      if (i < this.activeSlide - this.visibleSlides || i > this.activeSlide + this.visibleSlides) {
+        item.setAttribute('aria-hidden', true);
+      } else {
+        item.setAttribute('aria-hidden', false);
+      }
     });
-    this.slides[slideId].setAttribute('aria-hidden', false);
 
-    // Animate slides
+    // Animate slides by setting the offset of the slide container
     const slideWidth = parseInt(this.firstSlide.offsetWidth);
     const slideMargin = parseInt(getComputedStyle(this.firstSlide).marginRight);
     const totalSlideWidth = slideWidth + slideMargin;
-    this.container.style.transform = `translateX(-${totalSlideWidth * slideId}px)`
+    this.container.style.transform = `translateX(-${totalSlideWidth * this.activeSlide}px)`
   }
 
-  // handle recalculation of carousel position etc
+  // Handle recalculation of carousel position etc
   onResize () {
+
+    // This could be upgraded later to handle more varied cases
+    if (window.innerWidth <= 480) {
+      this.visibleSlides = 0;
+    } else if (window.innerWidth <= 768) {
+      this.visibleSlides = 1;
+    } else {
+      this.visibleSlides = 2;
+    }
+
+    // The offset and aria-hidden state need to be recalculated based on the size and number of the images
     this.changeActiveSlide(this.activeSlide);
   }
 
   onTriggerPrev() {
-    if (this.activeSlide > 0) {
-      this.changeActiveSlide(this.activeSlide - 1);
-    }
+    this.changeActiveSlide(this.activeSlide - 1);
   }
   onTriggerNext() {
-    if (this.activeSlide < (this.slides.length - 1)) {
-      this.changeActiveSlide(this.activeSlide + 1)
-    }
+    this.changeActiveSlide(this.activeSlide + 1)
   }
 
   addListeners() {
