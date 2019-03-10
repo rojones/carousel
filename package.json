@@ -20,6 +20,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
+    "attach.js": "^1.0.5",
     "babel": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^10.0.0",

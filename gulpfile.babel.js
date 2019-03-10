@@ -80,7 +80,7 @@ gulp.task('svg', (done) => {
 gulp.task('watch', () => {
   livereload.listen();
   gulp.watch(`${srcDir}/scss/**/*.scss`, gulp.series('style'));
-  gulp.watch(`${srcDir}/scripts/script.js`, gulp.series('script'));
+  gulp.watch(`${srcDir}/scripts/**/*.js`, gulp.series('script'));
   gulp.watch('*.html', gulp.series('html'));
   gulp.watch(`${srcDir}/svg/**/*.svg`, gulp.series('svg'));
 });

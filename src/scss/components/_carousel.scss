@@ -30,8 +30,14 @@
     }
   }
   &__slide {
+    display: flex;
     position: relative;
     flex-shrink: 0;
+    figure {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
     img {
       width: 100%;
     }
@@ -63,5 +69,6 @@
   }
   &__caption {
     font-size: 2rem;
+    margin-top: 1rem;
   }
 }
