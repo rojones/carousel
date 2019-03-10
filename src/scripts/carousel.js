@@ -1,11 +1,16 @@
 export default class Carousel {
   constructor(el) {
+    this.el = el;
     this.options = JSON.parse(el.getAttribute('data-carousel-options'));
-    this.apiUrl = `https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=${this.options.searchQuery}&image_type=photo`
+    this.apiUrl = `https://pixabay.com/api/?key=9656065-a4094594c34f9ac14c7fc4c39&q=${this.options.searchQuery}&image_type=photo`;
     this.count = this.options.slides;
+    this.activeSlide = 0;
+    this.container = el.querySelector('.carousel__slide-container');
+    this.triggerPrev = el.querySelector('.controls__trigger--prev')
+    this.triggerNext = el.querySelector('.controls__trigger--next')
+    
 
-    this.container = el.querySelector('.carousel__slide-container')
-
+    this.addListeners();
     this.fetchImages();
   }
 
@@ -18,7 +23,6 @@ export default class Carousel {
     xhr.send();
     return xhr;
   }
-
 
   fetchImages() {
     this.getCORS(this.apiUrl, (request) => {
@@ -38,23 +42,63 @@ export default class Carousel {
   buildCarousel(hits) {
     let slides = ``;
     for (let i = 0; i < hits.length; i++) {
-      const url, user, tags = hits[i];
-
-      slides = slides + `<li class="carousel__slide">
+      const {webformatURL, user, tags} = hits[i];
+      slides = slides + `<li class="carousel__slide" aria-hidden="true">
                           <figure>
-                            <img src="${url}" alt="Image representing the tags '${tags}'">
+                            <img src="${webformatURL}" alt="Image representing the tags '${tags}'">
                             <figcaption class="carousel__caption">${user}</figcaption>
                           </figure>
                         </li>`
     }
     this.container.innerHTML = slides;
+    
+    this.firstSlide = this.el.querySelector('.carousel__slide');
+    this.slides = this.el.querySelectorAll('.carousel__slide');
+    console.log(this.slides)
+    this.changeActiveSlide(2)
+  }
+
+  // handle navigation
+  changeActiveSlide(slideId) {
+    this.activeSlide = slideId;
+
+    this.slides.forEach((item) => {
+      item.setAttribute('aria-hidden', true);
+    });
+    this.slides[slideId].setAttribute('aria-hidden', false);
+
+    // Animate slides
+    const slideWidth = parseInt(this.firstSlide.offsetWidth);
+    const slideMargin = parseInt(getComputedStyle(this.firstSlide).marginRight);
+    const totalSlideWidth = slideWidth + slideMargin;
+    this.container.style.transform = `translateX(-${totalSlideWidth * slideId}px)`
   }
 
   // handle recalculation of carousel position etc
   onResize () {
-
+    this.changeActiveSlide(this.activeSlide);
   }
 
-  // handle navigation
+  onTriggerPrev() {
+    if (this.activeSlide > 0) {
+      this.changeActiveSlide(this.activeSlide - 1);
+    }
+  }
+  onTriggerNext() {
+    if (this.activeSlide < (this.slides.length - 1)) {
+      this.changeActiveSlide(this.activeSlide + 1)
+    }
+  }
 
+  addListeners() {
+    this.triggerPrev.addEventListener('click', () => {
+      this.onTriggerPrev();
+    });
+    this.triggerNext.addEventListener('click', () => {
+      this.onTriggerNext();
+    });
+    window.addEventListener('resize', () => {
+      this.onResize();
+    });
+  }
 }
