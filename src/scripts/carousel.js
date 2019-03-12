@@ -6,16 +6,12 @@ export default class Carousel {
     this.count = this.options.slides;
     this.activeSlide = 0;
     this.visibleSlides = 2;
-    this.container = el.querySelector('.carousel__slide-container');
-    this.triggerPrev = el.querySelector('.controls__trigger--prev');
-    this.triggerNext = el.querySelector('.controls__trigger--next');
-
-    this.addListeners();
+    
     this.fetchImages();
   }
 
 
-  // Basic function to retrieve images fro pixabay api
+  // Basic function to retrieve images from pixabay api
   getCORS(url, success, error) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
@@ -54,11 +50,39 @@ export default class Carousel {
                           </figure>
                         </li>`
     }
-    this.container.innerHTML = slides;
-    
+
+    const carouselBody = `<div class="carousel__track">
+                            <ul class="carousel__slide-container">
+                              ${slides}
+                            </ul>
+                          </div>
+                          <div class="controls">
+                            <button class="controls__trigger controls__trigger--prev">
+                              Prev
+                              <svg>
+                                <title>Previous arrow</title>
+                                <use xlink:href="dist/svg/arrow.svg#Layer_1"></use>
+                              </svg>
+                            </button>
+                            <button class="controls__trigger controls__trigger--next">
+                              Next
+                              <svg>
+                                <title>Next arrow</title>
+                                <use xlink:href="dist/svg/arrow.svg#Layer_1"></use>
+                              </svg>
+                            </button>
+                          </div>`
+
+    this.el.innerHTML = carouselBody;
     this.firstSlide = this.el.querySelector('.carousel__slide');
     this.slides = this.el.querySelectorAll('.carousel__slide');
+    this.container = this.el.querySelector('.carousel__slide-container');
+    this.triggerPrev = this.el.querySelector('.controls__trigger--prev');
+    this.triggerNext = this.el.querySelector('.controls__trigger--next');
+
     this.recalculate();
+
+    this.addListeners();
   }
 
   // Handle navigation
