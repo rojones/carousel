@@ -1,4 +1,5 @@
 .carousel {
+  $self: &;
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
@@ -72,6 +73,34 @@
       img {
         
       }
+    }
+  }
+  &__indicator {
+    @extend #{$self}__slide;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    &:before {
+      content: none;
+    }
+    &--loading {
+      // Default to system font so users can see the loading message before the Google font is downloaded
+      font-family: 'system-ui';
+      &:after {
+        content: '';
+        margin-left: 1rem;
+        display: inline-block;
+        height: 1.6rem;
+        width: 1.6rem;
+        border: solid 0.3rem $text-light;
+        border-top-color: $text;
+        border-radius: 1.6rem;
+        animation: carousel-loading 1s linear infinite;
+      }
+    }
+    &--error {
+      color: $error;
     }
   }
   &__caption {

@@ -109,9 +109,7 @@ export default class Carousel {
 
   // Display a message if the api returns an error
   displayError() {
-    const errorMessage = `<li class="carousel__slide" aria-hidden="true">
-                            Something has gone wrong!
-                          </li>`
+    const errorMessage = `<li class="carousel__indicator carousel__indicator--error">There has been an error, please try loading the page again.</li>`
     this.container.innerHTML = errorMessage;
   }
 
