@@ -16,10 +16,11 @@ export default class Carousel {
 
 
   // Basic function to retrieve images fro pixabay api
-  getCORS(url, success) {
+  getCORS(url, success, error) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url);
     xhr.onload = success;
+    xhr.onerror = error;
     xhr.send();
     return xhr;
   }
@@ -36,6 +37,8 @@ export default class Carousel {
         hits.push(response.hits[i])
       }
       this.buildCarousel(hits);
+    }, (error) => {
+      this.displayError();
     });
   }
 
@@ -102,6 +105,14 @@ export default class Carousel {
       this.visibleSlides = 2;
     }
     this.changeActiveSlide(this.activeSlide);
+  }
+
+  // Display a message if the api returns an error
+  displayError() {
+    const errorMessage = `<li class="carousel__slide" aria-hidden="true">
+                            Something has gone wrong!
+                          </li>`
+    this.container.innerHTML = errorMessage;
   }
 
   onTriggerPrev() {
