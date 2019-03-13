@@ -133,8 +133,8 @@ export default class Carousel {
 
   // Display a message if the api returns an error
   displayError() {
-    const errorMessage = `<li class="carousel__indicator carousel__indicator--error">There has been an error, please try loading the page again.</li>`
-    this.container.innerHTML = errorMessage;
+    const errorMessage = `<div class="carousel__indicator carousel__indicator--error">There has been an error, please try loading the page again.</div>`
+    this.el.innerHTML = errorMessage;
   }
 
   onTriggerPrev() {
